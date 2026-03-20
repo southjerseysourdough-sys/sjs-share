@@ -63,8 +63,8 @@ export default async function ProductSharePage({ params }: Props) {
   if (!data) return notFound();
 
   return (
-    <div className="min-h-screen bg-[#eae6df] flex items-center justify-center p-6">
-      <div className="w-full max-w-[640px] rounded-2xl overflow-hidden shadow-lg bg-[#f5f1ea]">
+    <div className="min-h-screen bg-[#e7e3db] flex items-center justify-center p-6">
+      <div className="w-full max-w-[640px] rounded-2xl overflow-hidden shadow-xl bg-[#f8f5ef] border border-[#e2ddd3]">
 
         {/* IMAGE */}
         <img
@@ -75,32 +75,36 @@ export default async function ProductSharePage({ params }: Props) {
 
         {/* CONTENT */}
         <div className="p-6">
-          <p className="text-xs tracking-wide text-neutral-500 mb-2">
+          <p className="text-xs tracking-wide text-neutral-600 mb-2 font-medium">
             SOUTH JERSEY SOURDOUGH
           </p>
 
-          <h1 className="text-2xl font-semibold text-neutral-900 mb-2">
+          <h1 className="text-2xl font-semibold text-neutral-900 mb-2 leading-tight">
             {data.title}
           </h1>
 
-          <p className="text-sm text-neutral-600 mb-4 line-clamp-3">
+          <p className="text-sm text-neutral-700 mb-5 line-clamp-3 leading-relaxed">
             {data.description}
           </p>
 
           <div className="flex gap-3">
+
+            {/* PRIMARY BUTTON */}
             <a
               href={data.canonical_url}
-              className="px-4 py-2 rounded-lg bg-neutral-900 text-white text-sm font-medium"
+              className="px-4 py-2 rounded-lg bg-[#2b2b2b] hover:bg-black text-white text-sm font-semibold transition"
             >
               View Product
             </a>
 
+            {/* SECONDARY BUTTON */}
             <a
               href={STORE_URL}
-              className="px-4 py-2 rounded-lg border border-neutral-300 text-sm font-medium"
+              className="px-4 py-2 rounded-lg border border-[#d6d0c6] bg-white text-neutral-800 text-sm font-medium hover:bg-[#f3efe7] transition"
             >
               Visit Store
             </a>
+
           </div>
         </div>
       </div>
