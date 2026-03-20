@@ -75,24 +75,24 @@ export default async function ProductSharePage({ params }: Props) {
 
         {/* CONTENT */}
         <div className="p-6">
-          <p className="text-xs tracking-wide text-neutral-600 mb-2 font-medium">
+          <p className="text-xs tracking-wide text-[#7a7368] mb-2 font-medium">
             SOUTH JERSEY SOURDOUGH
           </p>
 
-          <h1 className="text-2xl font-semibold text-neutral-900 mb-2 leading-tight">
+          <h1 className="text-2xl font-semibold text-[#2f2a24] mb-2 leading-tight">
             {data.title}
           </h1>
 
-          <p className="text-sm text-neutral-700 mb-5 line-clamp-3 leading-relaxed">
+          <p className="text-sm text-[#5c554a] mb-5 line-clamp-3 leading-relaxed">
             {data.description}
           </p>
 
           <div className="flex gap-3">
 
-            {/* PRIMARY BUTTON - WARM MAROON */}
+            {/* PRIMARY BUTTON */}
             <a
               href={data.canonical_url}
-              className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-[#7a2e2e] text-white text-sm font-semibold no-underline hover:bg-[#5e2222] transition-colors"
+              className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg bg-[#7a2e2e] text-[#fff8f6] text-sm font-semibold no-underline hover:bg-[#5e2222] transition-colors"
             >
               View Product
             </a>
@@ -100,7 +100,7 @@ export default async function ProductSharePage({ params }: Props) {
             {/* SECONDARY BUTTON */}
             <a
               href={STORE_URL}
-              className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-[#d6d0c6] bg-white text-neutral-900 text-sm font-medium no-underline hover:bg-[#f3efe7] transition-colors"
+              className="inline-flex items-center justify-center px-5 py-2.5 rounded-lg border border-[#d6d0c6] bg-[#fbfaf7] text-[#4a443b] text-sm font-medium no-underline hover:bg-[#f3efe7] transition-colors"
             >
               Visit Store
             </a>
