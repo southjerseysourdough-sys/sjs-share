@@ -63,76 +63,149 @@ export default async function ProductSharePage({ params }: Props) {
   if (!data) return notFound();
 
   return (
-    <div className="min-h-screen bg-[#e6dfd4] flex items-center justify-center p-6">
-      <div className="w-full max-w-[640px] rounded-2xl overflow-hidden shadow-xl bg-[#f4efe7] border border-[#e0d6c8]">
-        <img
-          src={data.image}
-          alt={data.title}
-          className="w-full h-[260px] object-cover"
-        />
-
-        <div className="p-7">
-          <p className="text-xs tracking-[0.1em] text-[#9a7b55] mb-3 font-medium">
-            SOUTH JERSEY SOURDOUGH
-          </p>
-
-          <h1
-            className="text-[2rem] font-semibold mb-3 leading-tight"
-            style={{ color: "#4b382a" }}
+    <>
+      <div className="min-h-screen bg-[#e6dfd4] flex items-center justify-center p-6">
+        <div
+          className="w-full max-w-[640px] rounded-2xl overflow-hidden border"
+          style={{
+            backgroundColor: "#f4efe7",
+            borderColor: "#e0d6c8",
+            boxShadow: "0 18px 40px rgba(90, 64, 36, 0.12)",
+            animation: "cardFadeUp 700ms ease-out both",
+          }}
+        >
+          <div
+            style={{
+              overflow: "hidden",
+            }}
           >
-            {data.title}
-          </h1>
-
-          <p
-            className="text-[15px] mb-6 line-clamp-3 leading-relaxed"
-            style={{ color: "#6a5643" }}
-          >
-            {data.description}
-          </p>
-
-          <div className="flex gap-3">
-            <a
-              href={data.canonical_url}
-              className="inline-flex items-center justify-center px-6 py-3 rounded-xl no-underline shadow-md transition-colors hover:opacity-95"
+            <img
+              src={data.image}
+              alt={data.title}
+              className="w-full h-[260px] object-cover"
               style={{
-                backgroundColor: "#8a5a33",
-                color: "#fff7ec",
-                border: "1px solid #8a5a33",
-                WebkitTextFillColor: "#fff7ec",
+                animation: "imageFadeIn 900ms ease-out both",
+              }}
+            />
+          </div>
+
+          <div className="p-7">
+            <p
+              className="text-xs tracking-[0.1em] mb-3 font-medium"
+              style={{
+                color: "#9a7b55",
+                animation: "contentFade 850ms ease-out both",
               }}
             >
-              <span
+              SOUTH JERSEY SOURDOUGH
+            </p>
+
+            <h1
+              className="text-[2rem] font-semibold mb-3 leading-tight"
+              style={{
+                color: "#4b382a",
+                animation: "contentFade 950ms ease-out both",
+              }}
+            >
+              {data.title}
+            </h1>
+
+            <p
+              className="text-[15px] mb-6 line-clamp-3 leading-relaxed"
+              style={{
+                color: "#6a5643",
+                animation: "contentFade 1050ms ease-out both",
+              }}
+            >
+              {data.description}
+            </p>
+
+            <div
+              className="flex gap-3"
+              style={{
+                animation: "contentFade 1150ms ease-out both",
+              }}
+            >
+              <a
+                href={data.canonical_url}
+                className="inline-flex items-center justify-center px-6 py-3 rounded-xl no-underline transition-all duration-200 hover:-translate-y-[1px]"
                 style={{
+                  backgroundColor: "#8a5a33",
                   color: "#fff7ec",
+                  border: "1px solid #8a5a33",
                   WebkitTextFillColor: "#fff7ec",
+                  boxShadow: "0 8px 18px rgba(138, 90, 51, 0.18)",
                 }}
               >
-                View Product
-              </span>
-            </a>
+                <span
+                  style={{
+                    color: "#fff7ec",
+                    WebkitTextFillColor: "#fff7ec",
+                  }}
+                >
+                  View Product
+                </span>
+              </a>
 
-            <a
-              href={STORE_URL}
-              className="inline-flex items-center justify-center px-6 py-3 rounded-xl no-underline transition-colors hover:opacity-95"
-              style={{
-                backgroundColor: "#fbf8f3",
-                color: "#5f4a37",
-                border: "1px solid #d8cbb8",
-                WebkitTextFillColor: "#5f4a37",
-              }}
-            >
-              <span
+              <a
+                href={STORE_URL}
+                className="inline-flex items-center justify-center px-6 py-3 rounded-xl no-underline transition-all duration-200 hover:-translate-y-[1px]"
                 style={{
+                  backgroundColor: "#fbf8f3",
                   color: "#5f4a37",
+                  border: "1px solid #d8cbb8",
                   WebkitTextFillColor: "#5f4a37",
+                  boxShadow: "0 4px 12px rgba(95, 74, 55, 0.05)",
                 }}
               >
-                Visit Store
-              </span>
-            </a>
+                <span
+                  style={{
+                    color: "#5f4a37",
+                    WebkitTextFillColor: "#5f4a37",
+                  }}
+                >
+                  Visit Store
+                </span>
+              </a>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+
+      <style>{`
+        @keyframes cardFadeUp {
+          from {
+            opacity: 0;
+            transform: translateY(18px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+
+        @keyframes imageFadeIn {
+          from {
+            opacity: 0;
+            transform: scale(1.02);
+          }
+          to {
+            opacity: 1;
+            transform: scale(1);
+          }
+        }
+
+        @keyframes contentFade {
+          from {
+            opacity: 0;
+            transform: translateY(10px);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0);
+          }
+        }
+      `}</style>
+    </>
   );
 }
