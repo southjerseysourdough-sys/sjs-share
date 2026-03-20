@@ -1,29 +1,12 @@
 @import "tailwindcss";
 
+/* --- Base --- */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #f6f1e8;
+  --foreground: #2f241c;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
-
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
 html,
 body {
   margin: 0;
@@ -32,8 +15,8 @@ body {
 
 body {
   font-family: Arial, Helvetica, sans-serif;
-  background: #f6f1e8;
-  color: #2f241c;
+  background: var(--background);
+  color: var(--foreground);
 }
 
 * {
@@ -45,22 +28,28 @@ a {
   text-decoration: none;
 }
 
+/* --- Layout --- */
+
 .page {
   min-height: 100vh;
   display: grid;
   place-items: center;
-  padding: 24px;
+  padding: 28px;
 }
+
+/* --- Card --- */
 
 .card {
   width: 100%;
-  max-width: 960px;
+  max-width: 1080px;
   background: #fffdf9;
   border: 1px solid #e7dccd;
   border-radius: 24px;
   overflow: hidden;
   box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
 }
+
+/* --- Image --- */
 
 .imageWrap {
   width: 100%;
@@ -70,13 +59,14 @@ a {
 .imageWrap img {
   display: block;
   width: 100%;
-  height: auto;
-  max-height: 520px;
+  height: 420px;
   object-fit: cover;
 }
 
+/* --- Content --- */
+
 .content {
-  padding: 28px;
+  padding: 30px 32px 32px;
 }
 
 .eyebrow {
@@ -90,23 +80,26 @@ a {
 
 .content h1 {
   margin: 0 0 14px;
-  font-size: 40px;
-  line-height: 1.1;
+  font-size: 30px;
+  line-height: 1.15;
   color: #2f241c;
 }
 
 .content p {
   margin: 0;
-  font-size: 18px;
-  line-height: 1.65;
+  font-size: 16px;
+  line-height: 1.7;
   color: #4c3d31;
+  max-width: 920px;
 }
+
+/* --- Actions --- */
 
 .actions {
   display: flex;
-  gap: 14px;
+  gap: 16px;
   flex-wrap: wrap;
-  margin-top: 28px;
+  margin-top: 26px;
 }
 
 .button {
@@ -119,6 +112,11 @@ a {
   background: #7b5c3e;
   color: #ffffff;
   font-weight: 700;
+  transition: background 0.2s ease;
+}
+
+.button:hover {
+  background: #6a4d32;
 }
 
 .link {
@@ -132,15 +130,14 @@ a {
   background: #f8f2e8;
   color: #5b4736;
   font-weight: 700;
-}
-
-.button:hover {
-  background: #6a4d32;
+  transition: background 0.2s ease;
 }
 
 .link:hover {
   background: #f1e7d8;
 }
+
+/* --- Mobile --- */
 
 @media (max-width: 640px) {
   .page {
@@ -148,15 +145,19 @@ a {
   }
 
   .content {
-    padding: 20px;
+    padding: 22px 20px 24px;
   }
 
   .content h1 {
-    font-size: 30px;
+    font-size: 24px;
   }
 
   .content p {
-    font-size: 16px;
+    font-size: 15px;
+  }
+
+  .imageWrap img {
+    height: 260px;
   }
 
   .actions {
