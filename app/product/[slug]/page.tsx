@@ -6,6 +6,15 @@ type Props = {
   params: Promise<{ slug: string }>;
 };
 
+const SITE_NAME = "South Jersey Sourdough";
+const STORE_URL = "https://southjerseysourdough.com";
+
+function shorten(text: string, maxLength: number): string {
+  const clean = (text || "").trim();
+  if (clean.length <= maxLength) return clean;
+  return `${clean.slice(0, maxLength).trimEnd()}...`;
+}
+
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params;
   const data = await getShareMetadata(slug);
@@ -21,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   return {
     title: data.title,
-    description: data.description,
+    description: shorten(data.description || "", 155),
     alternates: {
       canonical: data.canonical_url,
     },
@@ -30,7 +39,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: data.description,
       url: shareUrl,
       type: "website",
-      siteName: "South Jersey Sourdough",
+      siteName: SITE_NAME,
       images: [
         {
           url: data.image,
@@ -51,32 +60,50 @@ export default async function ProductSharePage({ params }: Props) {
   const { slug } = await params;
   const data = await getShareMetadata(slug);
 
-  if (!data) {
-    notFound();
-  }
+  if (!data) return notFound();
 
   return (
-    <main className="page">
-      <div className="card">
-        <div className="imageWrap">
-          <img src={data.image} alt={data.title} />
-        </div>
+    <div className="min-h-screen bg-[#eae6df] flex items-center justify-center p-6">
+      <div className="w-full max-w-[640px] rounded-2xl overflow-hidden shadow-lg bg-[#f5f1ea]">
 
-        <div className="content">
-          <div className="eyebrow">South Jersey Sourdough</div>
-          <h1>{data.title}</h1>
-          <p>{data.description}</p>
+        {/* IMAGE */}
+        <img
+          src={data.image}
+          alt={data.title}
+          className="w-full h-[260px] object-cover"
+        />
 
-          <div className="actions">
-            <a className="button" href={data.canonical_url}>
+        {/* CONTENT */}
+        <div className="p-6">
+          <p className="text-xs tracking-wide text-neutral-500 mb-2">
+            SOUTH JERSEY SOURDOUGH
+          </p>
+
+          <h1 className="text-2xl font-semibold text-neutral-900 mb-2">
+            {data.title}
+          </h1>
+
+          <p className="text-sm text-neutral-600 mb-4 line-clamp-3">
+            {data.description}
+          </p>
+
+          <div className="flex gap-3">
+            <a
+              href={data.canonical_url}
+              className="px-4 py-2 rounded-lg bg-neutral-900 text-white text-sm font-medium"
+            >
               View Product
             </a>
-            <a className="link" href="https://southjerseysourdough.com">
+
+            <a
+              href={STORE_URL}
+              className="px-4 py-2 rounded-lg border border-neutral-300 text-sm font-medium"
+            >
               Visit Store
             </a>
           </div>
         </div>
       </div>
-    </main>
+    </div>
   );
 }
