@@ -1,63 +1,48 @@
-import type { Metadata } from "next";
-import { notFound } from "next/navigation";
+import type { Metadata } from 'next';
+import RedirectClient from './RedirectClient';
 
-type ProductData = {
-  slug: string;
-  title: string;
+type Product = {
+  name: string;
   description: string;
   image: string;
   canonicalUrl: string;
 };
 
-const PRODUCTS: Record<string, ProductData> = {
-  "original-starter": {
-    slug: "original-starter",
-    title: "Original Sourdough Starter",
+const PRODUCTS: Record<string, Product> = {
+  'original-starter': {
+    name: 'Original Sourdough Starter',
     description:
-      "A mature dehydrated sourdough starter from South Jersey Sourdough.",
-    image:
-      "https://southjerseysourdough.com/opengraph-image.png",
+      'A mature dehydrated sourdough starter from South Jersey Sourdough.',
+    image: 'https://southjerseysourdough.com/opengraph-image.png',
     canonicalUrl:
-      "https://southjerseysourdough.com/shop/organic-authentic-italian-liquid-sourdough-starter",
+      'https://southjerseysourdough.com/shop/organic-authentic-italian-liquid-sourdough-starter',
   },
-  "einkorn-starter": {
-    slug: "einkorn-starter",
-    title: "Organic Einkorn Sourdough Starter",
+  'organic-starter': {
+    name: 'Organic Sourdough Starter',
     description:
-      "A traditional dehydrated Einkorn sourdough starter for home bakers.",
-    image:
-      "https://southjerseysourdough.com/opengraph-image.png",
+      'A mature organic dehydrated sourdough starter from South Jersey Sourdough.',
+    image: 'https://southjerseysourdough.com/opengraph-image.png',
     canonicalUrl:
-      "https://southjerseysourdough.com/shop/organic-einkorn-sourdough-starter",
-  },
-  "rye-starter": {
-    slug: "rye-starter",
-    title: "Rye Sourdough Starter",
-    description:
-      "A mature dehydrated rye sourdough starter from South Jersey Sourdough.",
-    image:
-      "https://southjerseysourdough.com/opengraph-image.png",
-    canonicalUrl:
-      "https://southjerseysourdough.com/shop/rye-sourdough-starter",
+      'https://southjerseysourdough.com/shop/organic-authentic-italian-liquid-sourdough-starter',
   },
 };
 
-function getProduct(slug: string): ProductData | null {
-  return PRODUCTS[slug] ?? null;
-}
+type PageProps = {
+  params: Promise<{
+    slug: string;
+  }>;
+};
 
 export async function generateMetadata({
   params,
-}: {
-  params: Promise<{ slug: string }>;
-}): Promise<Metadata> {
+}: PageProps): Promise<Metadata> {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const product = PRODUCTS[slug];
 
   if (!product) {
     return {
-      title: "South Jersey Sourdough",
-      description: "Traditional sourdough starters and baking goods.",
+      title: 'Product Not Found',
+      description: 'This product could not be found.',
       robots: {
         index: false,
         follow: false,
@@ -65,63 +50,165 @@ export async function generateMetadata({
     };
   }
 
-  const shareUrl = `https://share.southjerseysourdough.com/product/${product.slug}`;
+  const shareUrl = `https://share.southjerseysourdough.com/product/${slug}`;
 
   return {
-    title: product.title,
+    title: product.name,
     description: product.description,
-    alternates: {
-      canonical: product.canonicalUrl,
-    },
     robots: {
       index: false,
       follow: false,
     },
+    alternates: {
+      canonical: product.canonicalUrl,
+    },
     openGraph: {
-      title: product.title,
+      title: product.name,
       description: product.description,
       url: shareUrl,
-      siteName: "South Jersey Sourdough",
+      siteName: 'South Jersey Sourdough',
+      locale: 'en_US',
+      type: 'website',
       images: [
         {
           url: product.image,
           width: 1200,
           height: 630,
-          alt: product.title,
+          alt: product.name,
         },
       ],
-      locale: "en_US",
-      type: "website",
     },
     twitter: {
-      card: "summary_large_image",
-      title: product.title,
+      card: 'summary_large_image',
+      title: product.name,
       description: product.description,
       images: [product.image],
     },
   };
 }
 
-export default async function ProductSharePage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function ProductSharePage({ params }: PageProps) {
   const { slug } = await params;
-  const product = getProduct(slug);
+  const product = PRODUCTS[slug];
 
   if (!product) {
-    notFound();
+    return (
+      <main
+        style={{
+          minHeight: '100vh',
+          display: 'grid',
+          placeItems: 'center',
+          padding: '24px',
+          fontFamily:
+            'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+          background: '#f7f3ee',
+          color: '#2b2b2b',
+        }}
+      >
+        <div
+          style={{
+            maxWidth: '640px',
+            width: '100%',
+            background: '#ffffff',
+            border: '1px solid #e8dfd3',
+            borderRadius: '18px',
+            padding: '32px',
+            textAlign: 'center',
+            boxShadow: '0 10px 30px rgba(0,0,0,0.06)',
+          }}
+        >
+          <h1 style={{ marginTop: 0, fontSize: '2rem' }}>Product Not Found</h1>
+          <p style={{ fontSize: '1.05rem', lineHeight: 1.6, marginBottom: 0 }}>
+            This product could not be found.
+          </p>
+        </div>
+      </main>
+    );
   }
 
   return (
-    <html>
-      <head>
-        <meta httpEquiv="refresh" content={`0; url=${product.canonicalUrl}`} />
-      </head>
-      <body>
-        <p>Redirecting...</p>
-      </body>
-    </html>
+    <main
+      style={{
+        minHeight: '100vh',
+        display: 'grid',
+        placeItems: 'center',
+        padding: '24px',
+        fontFamily:
+          'ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif',
+        background: '#f7f3ee',
+        color: '#2b2b2b',
+      }}
+    >
+      <RedirectClient url={product.canonicalUrl} delay={1200} />
+
+      <div
+        style={{
+          maxWidth: '720px',
+          width: '100%',
+          background: '#ffffff',
+          border: '1px solid #e8dfd3',
+          borderRadius: '20px',
+          overflow: 'hidden',
+          boxShadow: '0 12px 36px rgba(0,0,0,0.08)',
+        }}
+      >
+        <img
+          src={product.image}
+          alt={product.name}
+          style={{
+            display: 'block',
+            width: '100%',
+            aspectRatio: '1200 / 630',
+            objectFit: 'cover',
+            background: '#efe7dc',
+          }}
+        />
+
+        <div style={{ padding: '28px' }}>
+          <p
+            style={{
+              margin: '0 0 10px 0',
+              fontSize: '0.9rem',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
+              color: '#7a6a58',
+            }}
+          >
+            South Jersey Sourdough
+          </p>
+
+          <h1
+            style={{
+              margin: '0 0 12px 0',
+              fontSize: '2rem',
+              lineHeight: 1.15,
+            }}
+          >
+            {product.name}
+          </h1>
+
+          <p
+            style={{
+              margin: '0 0 20px 0',
+              fontSize: '1.05rem',
+              lineHeight: 1.7,
+              color: '#4b443d',
+            }}
+          >
+            {product.description}
+          </p>
+
+          <p
+            style={{
+              margin: 0,
+              fontSize: '0.98rem',
+              color: '#6d6257',
+            }}
+          >
+            Taking you to the full product page...
+          </p>
+        </div>
+      </div>
+    </main>
   );
 }
