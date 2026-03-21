@@ -68,7 +68,7 @@ export default function ShareActions({
     <div className="shareSection">
       <div className="shareHeader">
         <h2>Share this product</h2>
-        <p>Send it where people will actually see it.</p>
+        <p>Share it with someone who will enjoy it.</p>
       </div>
 
       <div className="shareGrid">
