@@ -1,9 +1,7 @@
 @import "tailwindcss";
 
-/* --- Base --- */
-
 :root {
-  --background: #f6f1e8;
+  --background: #f3ede3;
   --foreground: #2f241c;
 }
 
@@ -11,16 +9,24 @@ html,
 body {
   margin: 0;
   padding: 0;
+  min-height: 100%;
 }
 
 body {
+  min-height: 100vh;
   font-family: Arial, Helvetica, sans-serif;
   background: var(--background);
   color: var(--foreground);
 }
 
-* {
+*,
+*::before,
+*::after {
   box-sizing: border-box;
+}
+
+img {
+  max-width: 100%;
 }
 
 a {
@@ -28,136 +34,290 @@ a {
   text-decoration: none;
 }
 
-/* --- Layout --- */
+/* Base layout */
 
 .page {
+  position: relative;
   min-height: 100vh;
   display: grid;
   place-items: center;
   padding: 28px;
+  overflow: hidden;
 }
 
-/* --- Card --- */
+.pageGlow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.pageTexture {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.shellFadeIn {
+  animation: fadeRise 620ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* SJS page background */
+
+.sjsPage {
+  background:
+    radial-gradient(circle at top, rgba(255, 251, 245, 0.94) 0%, rgba(244, 237, 227, 0.94) 42%, rgba(232, 223, 210, 0.98) 100%);
+}
+
+.sjsPage .pageGlow {
+  background:
+    radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0) 42%),
+    radial-gradient(circle at 84% 18%, rgba(166, 128, 84, 0.1) 0%, rgba(166, 128, 84, 0) 30%);
+}
+
+.sjsPage .pageTexture {
+  opacity: 0.05;
+  background-image: url("https://www.transparenttextures.com/patterns/paper-fibers.png");
+  background-repeat: repeat;
+  background-size: auto;
+  mix-blend-mode: multiply;
+}
+
+/* Card */
 
 .card {
+  position: relative;
+  z-index: 1;
   width: 100%;
-  max-width: 1080px;
-  background: #fffdf9;
-  border: 1px solid #e7dccd;
-  border-radius: 24px;
   overflow: hidden;
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.08);
 }
 
-/* --- Image --- */
+.sjsCard {
+  max-width: 980px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.02fr) minmax(0, 0.98fr);
+  align-items: stretch;
+  border-radius: 30px;
+  border: 1px solid rgba(149, 120, 88, 0.18);
+  background: rgba(252, 248, 241, 0.9);
+  box-shadow:
+    0 22px 64px rgba(91, 68, 44, 0.13),
+    inset 0 1px 0 rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(4px);
+}
+
+/* Image */
 
 .imageWrap {
+  position: relative;
   width: 100%;
-  background: #efe6d8;
+  overflow: hidden;
+}
+
+.sjsCard .imageWrap {
+  min-height: 420px;
+  background:
+    linear-gradient(180deg, rgba(239, 230, 216, 0.92) 0%, rgba(226, 214, 198, 0.96) 100%);
+}
+
+.sjsCard .imageWrap::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.05) 0%, rgba(88, 64, 41, 0.08) 100%);
 }
 
 .imageWrap img {
   display: block;
   width: 100%;
-  height: 420px;
+  height: 100%;
   object-fit: cover;
+  transition: transform 700ms ease, filter 700ms ease;
+  will-change: transform;
 }
 
-/* --- Content --- */
+.sjsCard:hover .imageWrap img {
+  transform: scale(1.04);
+  filter: saturate(1.03);
+}
+
+/* Content */
 
 .content {
-  padding: 30px 32px 32px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.sjsCard .content {
+  padding: 38px 36px 38px;
+  background:
+    linear-gradient(180deg, rgba(255, 251, 246, 0.84) 0%, rgba(250, 244, 235, 0.94) 100%);
 }
 
 .eyebrow {
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  margin-bottom: 16px;
+  padding: 8px 14px;
+  border-radius: 999px;
   text-transform: uppercase;
-  color: #8b6f4e;
-  margin-bottom: 12px;
+}
+
+.sjsCard .eyebrow {
+  border: 1px solid rgba(159, 126, 90, 0.18);
+  background: rgba(255, 252, 247, 0.92);
+  color: #98734f;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  box-shadow: 0 4px 14px rgba(97, 73, 48, 0.05);
 }
 
 .content h1 {
-  margin: 0 0 14px;
-  font-size: 30px;
-  line-height: 1.15;
-  color: #2f241c;
+  margin: 0;
+}
+
+.sjsCard .content h1 {
+  color: #4b382a;
+  font-size: clamp(2rem, 3.1vw, 3rem);
+  line-height: 1.06;
+  letter-spacing: -0.03em;
+  font-weight: 600;
+  text-wrap: balance;
 }
 
 .content p {
   margin: 0;
-  font-size: 16px;
-  line-height: 1.7;
-  color: #4c3d31;
-  max-width: 920px;
 }
 
-/* --- Actions --- */
+.sjsCard .content p {
+  margin-top: 18px;
+  color: #6b5644;
+  font-size: 16px;
+  line-height: 1.8;
+  max-width: 34ch;
+  text-wrap: pretty;
+}
+
+/* Actions */
 
 .actions {
   display: flex;
-  gap: 16px;
   flex-wrap: wrap;
-  margin-top: 26px;
+  gap: 12px;
+  margin-top: 28px;
 }
 
-.button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-height: 48px;
-  padding: 0 18px;
-  border-radius: 12px;
-  background: #7b5c3e;
-  color: #ffffff;
-  font-weight: 700;
-  transition: background 0.2s ease;
-}
-
-.button:hover {
-  background: #6a4d32;
-}
-
+.button,
 .link {
   display: inline-flex;
   align-items: center;
   justify-content: center;
   min-height: 48px;
-  padding: 0 18px;
-  border-radius: 12px;
-  border: 1px solid #d8c8b3;
-  background: #f8f2e8;
-  color: #5b4736;
+  padding: 0 20px;
+  border-radius: 999px;
+  font-size: 14px;
   font-weight: 700;
-  transition: background 0.2s ease;
+  line-height: 1;
+  text-decoration: none;
+  transition:
+    transform 180ms ease,
+    background-color 180ms ease,
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    color 180ms ease;
+}
+
+.button {
+  border: 1px solid #8a5a33;
+  background: linear-gradient(180deg, #98663d 0%, #8a5a33 100%);
+  color: #fff7ec !important;
+  box-shadow: 0 10px 22px rgba(138, 90, 51, 0.18);
+}
+
+.button:visited,
+.button:hover,
+.button:active,
+.button:focus {
+  color: #fff7ec !important;
+}
+
+.button:hover {
+  transform: translateY(-1px);
+  background: linear-gradient(180deg, #a06d43 0%, #91603a 100%);
+  box-shadow: 0 14px 26px rgba(138, 90, 51, 0.21);
+}
+
+.link {
+  border: 1px solid #d8cbb8;
+  background: rgba(251, 248, 243, 0.98);
+  color: #5f4a37 !important;
+  box-shadow: 0 8px 18px rgba(95, 74, 55, 0.06);
+}
+
+.link:visited,
+.link:hover,
+.link:active,
+.link:focus {
+  color: #5f4a37 !important;
 }
 
 .link:hover {
-  background: #f1e7d8;
+  transform: translateY(-1px);
+  background: rgba(247, 240, 230, 0.98);
+  border-color: #d2c1ab;
+  box-shadow: 0 12px 24px rgba(95, 74, 55, 0.09);
 }
 
-/* --- Mobile --- */
+.button:focus-visible,
+.link:focus-visible {
+  outline: 2px solid rgba(160, 118, 79, 0.35);
+  outline-offset: 2px;
+}
 
-@media (max-width: 640px) {
+/* Motion */
+
+@keyframes fadeRise {
+  0% {
+    opacity: 0;
+    transform: translateY(14px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Mobile */
+
+@media (max-width: 860px) {
   .page {
-    padding: 16px;
+    padding: 18px;
   }
 
-  .content {
-    padding: 22px 20px 24px;
+  .sjsCard {
+    grid-template-columns: 1fr;
+    max-width: 640px;
   }
 
-  .content h1 {
-    font-size: 24px;
+  .sjsCard .imageWrap {
+    min-height: 320px;
   }
 
-  .content p {
+  .sjsCard .content {
+    padding: 28px 22px 26px;
+  }
+
+  .sjsCard .content h1 {
+    font-size: clamp(1.8rem, 7vw, 2.35rem);
+  }
+
+  .sjsCard .content p {
+    max-width: none;
     font-size: 15px;
-  }
-
-  .imageWrap img {
-    height: 260px;
   }
 
   .actions {
@@ -167,5 +327,22 @@ a {
   .button,
   .link {
     width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .shellFadeIn {
+    animation: none;
+  }
+
+  .imageWrap img,
+  .button,
+  .link {
+    transition: none;
+  }
+
+  .sjsCard:hover .imageWrap img {
+    transform: none;
+    filter: none;
   }
 }
