@@ -1,7 +1,15 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { getShareMetadata } from "@/lib/share";
+import ShareActions from "./ShareActions";
 
+/**
+ * SJS product share page.
+ *
+ * This page fetches metadata for a given product slug from the backend,
+ * generates appropriate Open Graph and Twitter metadata for social sharing,
+ * and renders a card with product information along with share actions.
+ */
 type Props = {
   params: Promise<{ slug: string }>;
 };
@@ -22,7 +30,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!data) {
     return {
       title: "Product Not Found",
-      description: "This product could not be found."
+      description: "This product could not be found.",
     };
   }
 
@@ -32,7 +40,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     title: data.title,
     description: shorten(data.description || "", 155),
     alternates: {
-      canonical: data.canonical_url
+      canonical: data.canonical_url,
     },
     openGraph: {
       title: data.title,
@@ -43,16 +51,16 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       images: [
         {
           url: data.image,
-          alt: data.title
-        }
-      ]
+          alt: data.title,
+        },
+      ],
     },
     twitter: {
       card: "summary_large_image",
       title: data.title,
       description: data.description,
-      images: [data.image]
-    }
+      images: [data.image],
+    },
   };
 }
 
@@ -64,6 +72,8 @@ export default async function ProductSharePage({ params }: Props) {
     notFound();
   }
 
+  const shareUrl = `https://share.southjerseysourdough.com/product/${data!.slug}`;
+
   return (
     <main className="page sjsPage">
       <div className="pageGlow" aria-hidden="true" />
@@ -71,16 +81,16 @@ export default async function ProductSharePage({ params }: Props) {
 
       <div className="card shellFadeIn sjsCard">
         <div className="imageWrap">
-          <img src={data.image} alt={data.title} />
+          <img src={data!.image} alt={data!.title} />
         </div>
 
         <div className="content">
           <div className="eyebrow">South Jersey Sourdough</div>
-          <h1>{data.title}</h1>
-          <p>{data.description}</p>
+          <h1>{data!.title}</h1>
+          <p>{data!.description}</p>
 
           <div className="actions">
-            <a className="button" href={data.canonical_url}>
+            <a className="button" href={data!.canonical_url}>
               View Product
             </a>
 
@@ -88,6 +98,13 @@ export default async function ProductSharePage({ params }: Props) {
               Visit Store
             </a>
           </div>
+
+          <ShareActions
+            title={data!.title}
+            description={data!.description}
+            shareUrl={shareUrl}
+            image={data!.image}
+          />
         </div>
       </div>
     </main>
