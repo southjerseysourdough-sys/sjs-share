@@ -64,21 +64,52 @@ export default async function ProductSharePage({ params }: Props) {
 
   return (
     <>
-      <div className="min-h-screen bg-[#e6dfd4] flex items-center justify-center p-6">
+      <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden">
         <div
-          className="w-full max-w-[640px] rounded-2xl overflow-hidden border"
+          className="absolute inset-0"
+          style={{
+            backgroundColor: "#e6dfd4",
+            backgroundImage: `
+              radial-gradient(rgba(120, 92, 62, 0.045) 0.6px, transparent 0.6px),
+              radial-gradient(rgba(255, 255, 255, 0.12) 0.6px, transparent 0.6px)
+            `,
+            backgroundPosition: "0 0, 12px 12px",
+            backgroundSize: "24px 24px",
+          }}
+        />
+
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background:
+              "linear-gradient(to bottom, rgba(255,255,255,0.10), rgba(0,0,0,0.02))",
+            mixBlendMode: "soft-light",
+          }}
+        />
+
+        <div
+          className="relative w-full max-w-[640px] rounded-2xl overflow-hidden"
           style={{
             backgroundColor: "#f4efe7",
-            borderColor: "#e0d6c8",
+            border: "1px solid #e0d6c8",
             boxShadow: "0 18px 40px rgba(90, 64, 36, 0.12)",
             animation: "cardFadeUp 700ms ease-out both",
           }}
         >
           <div
+            className="absolute inset-0 pointer-events-none"
             style={{
-              overflow: "hidden",
+              backgroundImage: `
+                radial-gradient(rgba(110, 88, 62, 0.03) 0.5px, transparent 0.5px),
+                radial-gradient(rgba(255,255,255,0.08) 0.5px, transparent 0.5px)
+              `,
+              backgroundPosition: "0 0, 10px 10px",
+              backgroundSize: "20px 20px",
+              opacity: 0.7,
             }}
-          >
+          />
+
+          <div style={{ overflow: "hidden" }}>
             <img
               src={data.image}
               alt={data.title}
@@ -89,7 +120,7 @@ export default async function ProductSharePage({ params }: Props) {
             />
           </div>
 
-          <div className="p-7">
+          <div className="relative p-7">
             <p
               className="text-xs tracking-[0.1em] mb-3 font-medium"
               style={{
