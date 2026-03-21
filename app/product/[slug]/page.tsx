@@ -65,6 +65,7 @@ export default async function ProductSharePage({ params }: Props) {
   return (
     <>
       <div className="min-h-screen flex items-center justify-center p-6 relative overflow-hidden">
+        {/* BACKGROUND GRAIN */}
         <div
           className="absolute inset-0"
           style={{
@@ -78,6 +79,7 @@ export default async function ProductSharePage({ params }: Props) {
           }}
         />
 
+        {/* LIGHT OVERLAY */}
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
@@ -87,6 +89,7 @@ export default async function ProductSharePage({ params }: Props) {
           }}
         />
 
+        {/* CARD */}
         <div
           className="relative w-full max-w-[640px] rounded-2xl overflow-hidden"
           style={{
@@ -96,6 +99,7 @@ export default async function ProductSharePage({ params }: Props) {
             animation: "cardFadeUp 700ms ease-out both",
           }}
         >
+          {/* CARD GRAIN */}
           <div
             className="absolute inset-0 pointer-events-none"
             style={{
@@ -109,17 +113,19 @@ export default async function ProductSharePage({ params }: Props) {
             }}
           />
 
-          <div style={{ overflow: "hidden" }}>
+          {/* IMAGE WRAPPER WITH HOVER */}
+          <div className="overflow-hidden group">
             <img
               src={data.image}
               alt={data.title}
-              className="w-full h-[260px] object-cover"
+              className="w-full h-[260px] object-cover transition-transform duration-700 ease-out group-hover:scale-[1.05]"
               style={{
                 animation: "imageFadeIn 900ms ease-out both",
               }}
             />
           </div>
 
+          {/* CONTENT */}
           <div className="relative p-7">
             <p
               className="text-xs tracking-[0.1em] mb-3 font-medium"
@@ -168,12 +174,7 @@ export default async function ProductSharePage({ params }: Props) {
                   boxShadow: "0 8px 18px rgba(138, 90, 51, 0.18)",
                 }}
               >
-                <span
-                  style={{
-                    color: "#fff7ec",
-                    WebkitTextFillColor: "#fff7ec",
-                  }}
-                >
+                <span style={{ color: "#fff7ec" }}>
                   View Product
                 </span>
               </a>
@@ -185,16 +186,10 @@ export default async function ProductSharePage({ params }: Props) {
                   backgroundColor: "#fbf8f3",
                   color: "#5f4a37",
                   border: "1px solid #d8cbb8",
-                  WebkitTextFillColor: "#5f4a37",
                   boxShadow: "0 4px 12px rgba(95, 74, 55, 0.05)",
                 }}
               >
-                <span
-                  style={{
-                    color: "#5f4a37",
-                    WebkitTextFillColor: "#5f4a37",
-                  }}
-                >
+                <span style={{ color: "#5f4a37" }}>
                   Visit Store
                 </span>
               </a>
